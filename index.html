@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VibeMakers — Video Content Marketing | Cluj-Napoca</title>
+    <meta name="description" content="VibeMakers — Agenție de video content marketing din Cluj-Napoca. Creăm reels, UGC și storytelling de brand care transformă atenția în clienți.">
+
+    <!-- FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <!-- ICONS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <style>
+        /* ══════════════════════════════════════════
+           VARIABLES & RESET
+           ══════════════════════════════════════════ */
+        :root {
+            --yellow: #F2C744;
+            --yellow-dark: #D4A017;
+            --yellow-light: #FFF8E1;
+            --black: #0A0A0A;
+            --dark: #111111;
+            --gray-900: #1a1a1a;
+            --gray-700: #444444;
+            --gray-500: #888888;
+            --gray-300: #cccccc;
+            --gray-100: #f5f5f5;
+            --white: #ffffff;
+            --font-body: 'Inter', -apple-system, sans-serif;
+            --font-heading: 'Space Grotesk', 'Inter', sans-serif;
+            --max-w: 1200px;
+            --transition: .35s cubic-bezier(.4,0,.2,1);
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-body);
+            color: var(--gray-700);
+            background: var(--white);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        img { max-width: 100%; display: block; }
+        a { text-decoration: none; color: inherit; }
+
+        .container { max-width: var(--max-w); margin: 0 auto; padding: 0 24px; }
+
+        /* ══════════════════════════════════════════
+           REVEAL ANIMATION
+           ══════════════════════════════════════════ */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity .7s ease, transform .7s ease;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* stagger children */
+        .reveal-stagger > * { opacity: 0; transform: translateY(30px); transition: opacity .5s ease, transform .5s ease; }
+        .reveal-stagger.visible > *:nth-child(1) { transition-delay: .05s; }
+        .reveal-stagger.visible > *:nth-child(2) { transition-delay: .15s; }
+        .reveal-stagger.visible > *:nth-child(3) { transition-delay: .25s; }
+        .reveal-stagger.visible > *:nth-child(4) { transition-delay: .35s; }
+        .reveal-stagger.visible > *:nth-child(5) { transition-delay: .45s; }
+        .reveal-stagger.visible > * { opacity: 1; transform: translateY(0); }
+        /* fix: only animate when parent has visible */
+        .reveal-stagger:not(.visible) > * { opacity: 0; transform: translateY(30px); }
+
+        /* ══════════════════════════════════════════
+           NAVIGATION
+           ══════════════════════════════════════════ */
+        .nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 18px 0;
+            background: rgba(10,10,10,.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,.06);
+            transition: padding var(--transition), background var(--transition);
+        }
+        .nav.scrolled { padding: 12px 0; background: rgba(10,10,10,.96); }
+        .nav .container { display: flex; align-items: center; justify-content: space-between; }
+        .nav-logo { font-family: var(--font-heading); font-size: 22px; font-weight: 800; letter-spacing: 1px; }
+        .nav-logo span { color: var(--yellow); }
+        .nav-links { display: flex; gap: 32px; align-items: center; }
+        .nav-links a { color: rgba(255,255,255,.7); font-size: 14px; font-weight: 500; transition: color var(--transition); }
+        .nav-links a:hover { color: var(--yellow); }
+        .nav-cta {
+            background: var(--yellow); color: var(--black); padding: 10px 24px;
+            border-radius: 8px; font-weight: 700; font-size: 13px; letter-spacing: .5px;
+            transition: transform var(--transition), box-shadow var(--transition);
+        }
+        .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(242,199,68,.3); }
+
+        /* Mobile menu */
+        .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+        .nav-toggle span { display: block; width: 24px; height: 2px; background: #fff; margin: 5px 0; transition: var(--transition); }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .nav-links.open {
+                display: flex; flex-direction: column; gap: 0;
+                position: absolute; top: 100%; left: 0; right: 0;
+                background: rgba(10,10,10,.98); padding: 20px;
+                border-top: 1px solid rgba(255,255,255,.06);
+            }
+            .nav-links.open a { padding: 12px 0; font-size: 16px; }
+            .nav-links.open .nav-cta { text-align: center; margin-top: 8px; }
+            .nav-toggle { display: block; }
+        }
+
+        /* ══════════════════════════════════════════
+           1. HERO
+           ══════════════════════════════════════════ */
+        .hero {
+            min-height: 100vh;
+            display: flex; align-items: center;
+            background: var(--black);
+            position: relative;
+            overflow: hidden;
+            padding-top: 80px;
+        }
+        .hero::before {
+            content: '';
+            position: absolute; inset: 0;
+            background:
+                radial-gradient(ellipse 70% 50% at 75% 40%, rgba(242,199,68,.08) 0%, transparent 70%),
+                radial-gradient(ellipse 50% 60% at 20% 80%, rgba(242,199,68,.04) 0%, transparent 60%);
+        }
+        /* animated grain texture */
+        .hero::after {
+            content: '';
+            position: absolute; inset: -50%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
+            opacity: .5;
+            pointer-events: none;
+        }
+
+        .hero-content { position: relative; z-index: 2; }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(242,199,68,.1); border: 1px solid rgba(242,199,68,.2);
+            padding: 8px 18px; border-radius: 50px;
+            font-size: 12px; font-weight: 600; color: var(--yellow);
+            letter-spacing: 2px; text-transform: uppercase;
+            margin-bottom: 28px;
+        }
+        .hero-badge::before { content: ''; width: 6px; height: 6px; background: var(--yellow); border-radius: 50%; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .3; } }
+
+        .hero h1 {
+            font-family: var(--font-heading);
+            font-size: clamp(42px, 7vw, 76px);
+            font-weight: 800;
+            line-height: 1.05;
+            color: var(--white);
+            margin-bottom: 24px;
+            letter-spacing: -1px;
+        }
+        .hero h1 .accent { color: var(--yellow); }
+
+        .hero-sub {
+            font-size: clamp(16px, 2vw, 20px);
+            color: rgba(255,255,255,.55);
+            max-width: 540px;
+            line-height: 1.7;
+            margin-bottom: 40px;
+        }
+        .hero-sub strong { color: rgba(255,255,255,.85); font-weight: 600; }
+
+        .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+        .btn-primary {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: var(--yellow); color: var(--black);
+            padding: 16px 36px; border-radius: 10px;
+            font-weight: 700; font-size: 15px; letter-spacing: .3px;
+            transition: transform var(--transition), box-shadow var(--transition);
+            border: none; cursor: pointer;
+        }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(242,199,68,.25); }
+
+        .btn-outline {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: transparent; color: var(--white);
+            padding: 16px 36px; border-radius: 10px;
+            font-weight: 600; font-size: 15px;
+            border: 1.5px solid rgba(255,255,255,.2);
+            transition: border-color var(--transition), color var(--transition);
+            cursor: pointer;
+        }
+        .btn-outline:hover { border-color: var(--yellow); color: var(--yellow); }
+
+        .hero-scroll {
+            position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
+            color: rgba(255,255,255,.3); font-size: 24px;
+            animation: scrollBounce 2s infinite;
+        }
+        @keyframes scrollBounce { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(10px); } }
+
+        /* ══════════════════════════════════════════
+           2. CINE SUNTEM
+           ══════════════════════════════════════════ */
+        .about { padding: 120px 0; background: var(--white); }
+        .section-label {
+            display: inline-block; font-size: 12px; font-weight: 700;
+            letter-spacing: 3px; text-transform: uppercase;
+            color: var(--yellow-dark); margin-bottom: 16px;
+        }
+        .section-title {
+            font-family: var(--font-heading); font-size: clamp(32px, 4vw, 48px);
+            font-weight: 800; color: var(--black); line-height: 1.15;
+            margin-bottom: 20px; letter-spacing: -.5px;
+        }
+
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+        .about-visual {
+            position: relative; aspect-ratio: 4/5;
+            background: var(--gray-100); border-radius: 16px; overflow: hidden;
+        }
+        .about-visual-placeholder {
+            width: 100%; height: 100%;
+            background: linear-gradient(135deg, var(--dark) 0%, #2a2a2a 100%);
+            display: flex; align-items: center; justify-content: center; flex-direction: column;
+            color: var(--white); gap: 12px;
+        }
+        .about-visual-placeholder i { font-size: 48px; opacity: .3; }
+        .about-visual-placeholder span { font-size: 14px; opacity: .4; font-weight: 500; }
+        .about-visual::after {
+            content: ''; position: absolute; bottom: -20px; right: -20px;
+            width: 120px; height: 120px; border-radius: 12px;
+            background: var(--yellow); z-index: -1;
+        }
+
+        .about-text p { font-size: 17px; color: var(--gray-700); margin-bottom: 20px; }
+        .about-values {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 32px;
+        }
+        .about-value {
+            display: flex; align-items: flex-start; gap: 12px;
+            padding: 16px; border-radius: 12px; background: var(--gray-100);
+        }
+        .about-value i { font-size: 20px; color: var(--yellow-dark); flex-shrink: 0; margin-top: 2px; }
+        .about-value span { font-size: 14px; font-weight: 600; color: var(--black); }
+
+        @media (max-width: 768px) {
+            .about-grid { grid-template-columns: 1fr; gap: 40px; }
+            .about-values { grid-template-columns: 1fr; }
+        }
+
+        /* ══════════════════════════════════════════
+           3. CE FACEM (SERVICII)
+           ══════════════════════════════════════════ */
+        .services { padding: 120px 0; background: var(--black); color: var(--white); }
+        .services .section-title { color: var(--white); }
+        .services-intro {
+            font-size: 18px; color: rgba(255,255,255,.5); max-width: 600px;
+            margin-bottom: 60px;
+        }
+
+        .services-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px;
+        }
+        .service-card {
+            background: rgba(255,255,255,.04);
+            border: 1px solid rgba(255,255,255,.06);
+            border-radius: 16px; padding: 36px;
+            transition: transform var(--transition), border-color var(--transition), background var(--transition);
+            position: relative; overflow: hidden;
+        }
+        .service-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(242,199,68,.3);
+            background: rgba(255,255,255,.06);
+        }
+        .service-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0;
+            height: 3px; background: var(--yellow);
+            transform: scaleX(0); transform-origin: left;
+            transition: transform .4s ease;
+        }
+        .service-card:hover::before { transform: scaleX(1); }
+
+        .service-icon {
+            width: 52px; height: 52px; border-radius: 12px;
+            background: rgba(242,199,68,.1);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 22px; color: var(--yellow); margin-bottom: 20px;
+        }
+        .service-card h3 {
+            font-family: var(--font-heading);
+            font-size: 20px; font-weight: 700; color: var(--white); margin-bottom: 10px;
+        }
+        .service-card p { font-size: 14px; line-height: 1.7; color: rgba(255,255,255,.5); }
+
+        /* ══════════════════════════════════════════
+           4. PORTOFOLIU
+           ══════════════════════════════════════════ */
+        .portfolio { padding: 120px 0; background: var(--white); }
+
+        /* ── Project block ── */
+        .project-block { margin-bottom: 100px; }
+        .project-block:last-child { margin-bottom: 0; }
+
+        .project-header {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
+            align-items: center; margin-bottom: 48px;
+        }
+        .project-header.reverse { direction: rtl; }
+        .project-header.reverse > * { direction: ltr; }
+
+        .project-info { }
+        .project-tag {
+            display: inline-block;
+            background: var(--yellow); color: var(--black);
+            padding: 5px 14px; border-radius: 50px;
+            font-size: 11px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 1px; margin-bottom: 14px;
+        }
+        .project-info h3 {
+            font-family: var(--font-heading);
+            font-size: clamp(28px, 3vw, 36px); font-weight: 800;
+            color: var(--black); margin-bottom: 16px; letter-spacing: -.3px;
+        }
+        .project-info p {
+            font-size: 16px; line-height: 1.7; color: var(--gray-700); margin-bottom: 12px;
+        }
+        .project-info .project-services {
+            display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px;
+        }
+        .project-services span {
+            background: var(--gray-100); color: var(--gray-700);
+            padding: 6px 14px; border-radius: 50px; font-size: 12px; font-weight: 600;
+        }
+
+        .project-hero-video {
+            border-radius: 16px; overflow: hidden;
+            aspect-ratio: 9/16; max-height: 480px;
+            background: var(--black);
+        }
+        .project-hero-video video {
+            width: 100%; height: 100%; object-fit: cover;
+            border-radius: 16px;
+        }
+
+        /* ── Video grid ── */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+        /* Masonry-like stagger */
+        .video-grid .video-card:nth-child(odd) { margin-top: 0; }
+        .video-grid .video-card:nth-child(even) { margin-top: 24px; }
+        .video-card {
+            position: relative; border-radius: 14px; overflow: hidden;
+            background: var(--black); aspect-ratio: 9/16;
+            cursor: pointer;
+            transition: transform var(--transition), box-shadow var(--transition);
+        }
+        .video-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 24px 60px rgba(0,0,0,.2);
+        }
+        .video-card video {
+            width: 100%; height: 100%; object-fit: cover;
+            display: block;
+        }
+        .video-card-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,.6) 0%, transparent 50%);
+            opacity: 0; transition: opacity var(--transition);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .video-card:hover .video-card-overlay { opacity: 1; }
+        .video-card-overlay i {
+            font-size: 48px; color: var(--white);
+            filter: drop-shadow(0 2px 8px rgba(0,0,0,.3));
+        }
+        .video-card-label {
+            position: absolute; bottom: 12px; left: 12px; right: 12px;
+            font-size: 12px; font-weight: 600; color: var(--white);
+            text-shadow: 0 1px 4px rgba(0,0,0,.5);
+            z-index: 3;
+        }
+
+        /* ── Project divider ── */
+        .project-divider {
+            width: 60px; height: 4px; background: var(--yellow);
+            border-radius: 2px; margin: 0 auto 100px;
+        }
+
+        @media (max-width: 1024px) {
+            .video-grid { grid-template-columns: repeat(3, 1fr); gap: 14px; }
+        }
+        @media (max-width: 768px) {
+            .project-header { grid-template-columns: 1fr; gap: 32px; }
+            .project-header.reverse { direction: ltr; }
+            .video-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .video-grid .video-card:nth-child(even) { margin-top: 16px; }
+            .video-card { border-radius: 10px; }
+            .video-card-label { font-size: 10px; bottom: 8px; left: 8px; right: 8px; }
+            .project-hero-video { max-height: 400px; margin: 0 auto; max-width: 280px; }
+            .project-block { margin-bottom: 72px; }
+            .project-divider { margin: 0 auto 72px; }
+            .portfolio { padding: 80px 0; }
+        }
+        @media (max-width: 400px) {
+            .video-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+            .video-grid .video-card:nth-child(even) { margin-top: 12px; }
+        }
+
+        /* ── Video lightbox ── */
+        .video-lightbox {
+            display: none; position: fixed; inset: 0; z-index: 9999;
+            background: rgba(0,0,0,.92); backdrop-filter: blur(10px);
+            align-items: center; justify-content: center;
+        }
+        .video-lightbox.active { display: flex; }
+        .video-lightbox video {
+            max-width: 90vw; max-height: 90vh; border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,.5);
+        }
+        .video-lightbox-close {
+            position: absolute; top: 24px; right: 32px;
+            background: none; border: none; color: #fff; font-size: 32px;
+            cursor: pointer; z-index: 10; opacity: .7; transition: opacity .2s;
+        }
+        .video-lightbox-close:hover { opacity: 1; }
+
+        /* ══════════════════════════════════════════
+           5. DE CE FUNCȚIONEAZĂ
+           ══════════════════════════════════════════ */
+        .why { padding: 120px 0; background: var(--gray-100); }
+        .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-top: 60px; }
+
+        .why-list { display: flex; flex-direction: column; gap: 28px; }
+        .why-item { display: flex; gap: 20px; }
+        .why-number {
+            flex-shrink: 0; width: 48px; height: 48px;
+            border-radius: 12px; background: var(--yellow);
+            display: flex; align-items: center; justify-content: center;
+            font-family: var(--font-heading); font-weight: 800; font-size: 18px;
+            color: var(--black);
+        }
+        .why-item h4 { font-size: 18px; font-weight: 700; color: var(--black); margin-bottom: 4px; }
+        .why-item p { font-size: 15px; color: var(--gray-500); line-height: 1.6; }
+
+        .why-stat-box {
+            background: var(--black); border-radius: 20px; padding: 48px;
+            text-align: center; color: var(--white);
+        }
+        .why-stat-box .big-number {
+            font-family: var(--font-heading);
+            font-size: clamp(64px, 8vw, 96px);
+            font-weight: 900; color: var(--yellow);
+            line-height: 1; margin-bottom: 12px;
+        }
+        .why-stat-box p { font-size: 18px; color: rgba(255,255,255,.6); }
+        .why-stat-box .stat-row {
+            display: flex; justify-content: center; gap: 40px; margin-top: 32px;
+            border-top: 1px solid rgba(255,255,255,.1); padding-top: 28px;
+        }
+        .why-stat-box .stat-item strong {
+            display: block; font-family: var(--font-heading);
+            font-size: 28px; font-weight: 800; color: var(--white);
+        }
+        .why-stat-box .stat-item span { font-size: 13px; color: rgba(255,255,255,.4); }
+
+        @media (max-width: 768px) { .why-grid { grid-template-columns: 1fr; gap: 40px; } }
+
+        /* ══════════════════════════════════════════
+           6. CTA FINAL
+           ══════════════════════════════════════════ */
+        .cta-section { padding: 120px 0; background: var(--black); text-align: center; position: relative; overflow: hidden; }
+        .cta-section::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(242,199,68,.1) 0%, transparent 70%);
+        }
+        .cta-content { position: relative; z-index: 2; }
+        .cta-section h2 {
+            font-family: var(--font-heading);
+            font-size: clamp(36px, 5vw, 56px);
+            font-weight: 800; color: var(--white);
+            margin-bottom: 20px; letter-spacing: -1px;
+        }
+        .cta-section h2 .accent { color: var(--yellow); }
+        .cta-section p {
+            font-size: 18px; color: rgba(255,255,255,.5);
+            max-width: 520px; margin: 0 auto 40px; line-height: 1.7;
+        }
+        .cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+        /* ══════════════════════════════════════════
+           FOOTER
+           ══════════════════════════════════════════ */
+        .footer {
+            background: var(--black); padding: 48px 0;
+            border-top: 1px solid rgba(255,255,255,.06);
+        }
+        .footer-inner {
+            display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;
+        }
+        .footer-logo { font-family: var(--font-heading); font-size: 20px; font-weight: 800; color: var(--white); }
+        .footer-logo span { color: var(--yellow); }
+        .footer-links { display: flex; gap: 24px; }
+        .footer-links a { color: rgba(255,255,255,.4); font-size: 14px; transition: color var(--transition); }
+        .footer-links a:hover { color: var(--yellow); }
+        .footer-copy { width: 100%; text-align: center; margin-top: 24px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,.06); }
+        .footer-copy p { font-size: 12px; color: rgba(255,255,255,.25); }
+
+        /* ══════════════════════════════════════════
+           UTILITY
+           ══════════════════════════════════════════ */
+        .text-center { text-align: center; }
+        .mx-auto { margin-left: auto; margin-right: auto; }
+    </style>
+</head>
+<body>
+
+    <!-- ═══════════════════════════════════════════
+         NAVIGATION
+         ═══════════════════════════════════════════ -->
+    <nav class="nav" id="navbar">
+        <div class="container">
+            <a href="#" class="nav-logo">VIBE<span>MAKERS</span></a>
+            <div class="nav-links" id="navLinks">
+                <a href="#despre">Cine suntem</a>
+                <a href="#servicii">Servicii</a>
+                <a href="#portofoliu">Portofoliu</a>
+                <a href="#de-ce">De ce noi</a>
+                <a href="#contact" class="nav-cta">CONTACTEAZĂ-NE</a>
+            </div>
+            <button class="nav-toggle" id="navToggle" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ═══════════════════════════════════════════
+         1. HERO
+         ═══════════════════════════════════════════ -->
+    <section class="hero" id="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">Video Content Marketing</div>
+                <h1>
+                    Scroll-ul se oprește.<br>
+                    <span class="accent">Brandul tău</span><br>
+                    rămâne <span class="accent">în minte.</span>
+                </h1>
+                <p class="hero-sub">
+                    Creăm video content strategic care transformă <strong>atenția online</strong> în <strong>clienți reali</strong> — pentru business-uri ambițioase din Cluj.
+                </p>
+                <div class="hero-actions">
+                    <a href="#portofoliu" class="btn-primary">
+                        <i class="bi bi-play-circle"></i> Vezi portofoliul
+                    </a>
+                    <a href="#contact" class="btn-outline">
+                        <i class="bi bi-calendar-check"></i> Programează un call
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="hero-scroll"><i class="bi bi-chevron-down"></i></div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         2. CINE SUNTEM
+         ═══════════════════════════════════════════ -->
+    <section class="about" id="despre">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-visual reveal">
+                    <div class="about-visual-placeholder">
+                        <i class="bi bi-camera-video"></i>
+                        <span>Foto Medeea &amp; Maria</span>
+                    </div>
+                </div>
+                <div class="reveal">
+                    <span class="section-label">Cine suntem</span>
+                    <h2 class="section-title">Medeea &amp; Maria.</h2>
+                    <p>
+                        Suntem doi oameni care înțeleg cum funcționează atenția online — și cum o transformăm în vânzări pentru business-ul tău.
+                    </p>
+                    <p>
+                        Am pornit VibeMakers dintr-o frustrare: vedeam branduri bune din Cluj care nu reușeau să comunice pe social media la nivelul la care merită. Produse excelente, prezență digitală mediocră.
+                    </p>
+                    <p>
+                        <strong>Nu suntem doar videografi.</strong> Suntem parteneri strategici de creștere prin content. Fiecare video pe care îl creăm pornește de la un obiectiv de business, nu de la o idee random.
+                    </p>
+                    <div class="about-values reveal-stagger">
+                        <div class="about-value">
+                            <i class="bi bi-bullseye"></i>
+                            <span>Gândire strategică</span>
+                        </div>
+                        <div class="about-value">
+                            <i class="bi bi-graph-up-arrow"></i>
+                            <span>Focus pe conversii</span>
+                        </div>
+                        <div class="about-value">
+                            <i class="bi bi-lightning-charge"></i>
+                            <span>Execuție rapidă</span>
+                        </div>
+                        <div class="about-value">
+                            <i class="bi bi-palette"></i>
+                            <span>Creativitate cu scop</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         3. CE FACEM
+         ═══════════════════════════════════════════ -->
+    <section class="services" id="servicii">
+        <div class="container">
+            <span class="section-label">Ce facem</span>
+            <h2 class="section-title">Content care lucrează<br>pentru business-ul tău.</h2>
+            <p class="services-intro">Fiecare format video este gândit strategic, filmat profesional și optimizat pentru platforma unde va performa cel mai bine.</p>
+
+            <div class="services-grid reveal-stagger">
+                <div class="service-card">
+                    <div class="service-icon"><i class="bi bi-bar-chart-line"></i></div>
+                    <h3>Video Marketing Strategic</h3>
+                    <p>Nu filmăm la întâmplare. Construim strategii de conținut video aliniate cu obiectivele tale de business: awareness, engagement sau conversie directă.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="bi bi-phone"></i></div>
+                    <h3>Reels &amp; Short-form</h3>
+                    <p>Conținut scurt, dinamic, optimizat pentru Instagram și TikTok. Hook în primele 3 secunde, mesaj clar, CTA care convertește.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="bi bi-person-video3"></i></div>
+                    <h3>UGC &amp; Content Autentic</h3>
+                    <p>User-generated content care arată autentic dar e construit strategic. Recenzii, unboxing-uri, demo-uri care construiesc încredere reală.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="bi bi-book"></i></div>
+                    <h3>Storytelling de Brand</h3>
+                    <p>Povestea brandului tău spusă vizual — cine ești, de ce exiști, ce te face diferit. Conținut care creează conexiune emoțională cu audiența.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="bi bi-cart-check"></i></div>
+                    <h3>Video pentru Conversie</h3>
+                    <p>Video ads, landing page videos, product demos — conținut construit cu un singur scop: să transforme vizualizările în acțiuni concrete.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         4. PORTOFOLIU
+         ═══════════════════════════════════════════ -->
+    <section class="portfolio" id="portofoliu">
+        <div class="container">
+            <div class="text-center reveal" style="margin-bottom:80px">
+                <span class="section-label">Portofoliu</span>
+                <h2 class="section-title">Proiecte care au<br>generat rezultate.</h2>
+            </div>
+
+            <!-- ╌╌╌╌╌ PANORAMIC360 ╌╌╌╌╌ -->
+            <div class="project-block reveal">
+                <div class="project-header">
+                    <div class="project-info">
+                        <span class="project-tag">HoReCa · Tourism · Brand Awareness</span>
+                        <h3>Panoramic360 Transilvania</h3>
+                        <p>Restaurant de après-ski cu o locație spectaculoasă. Am promovat atât restaurantul — preparate culinare, setup pentru evenimente — cât și locația din multiple perspective: partie de ski iarna, retreat de vară la munte.</p>
+                        <p>Am creat reclame video cu hook puternic, sketch-uri amuzante virale și videoclipuri de prezentare generală care au pus brand-ul pe harta turismului din Transilvania.</p>
+                        <div class="project-services">
+                            <span>🎬 Reclame video</span>
+                            <span>😂 Sketch-uri</span>
+                            <span>📍 Prezentare locație</span>
+                            <span>🎿 Experiențe</span>
+                        </div>
+                    </div>
+                    <div class="project-hero-video">
+                        <video src="Panoramic360/Reclama-Medeea-Ad1%20(1).mp4" muted loop playsinline preload="metadata"></video>
+                    </div>
+                </div>
+                <div class="video-grid reveal-stagger">
+                    <div class="video-card" onclick="openLightbox(this)">
+                        <video src="Panoramic360/AD-3.mp4" muted loop playsinline preload="metadata"></video>
+                        <div class="video-card-overlay"><i class="bi bi-play-circle-fill"></i></div>
+                        <div class="video-card-label">Reclamă video</div>
+                    </div>
+                    <div class="video-card" onclick="openLightbox(this)">
+                        <video src="Panoramic360/Medeea-AD%232.mp4" muted loop playsinline preload="metadata"></video>
+                        <div class="video-card-overlay"><i class="bi bi-play-circle-fill"></i></div>
+                        <div class="video-card-label">Reclamă restaurant</div>
+                    </div>
+                    <div class="video-card" onclick="openLightbox(this)">
+                        <video src="Panoramic360/sketch%203.mp4" muted loop playsinline preload="metadata"></video>
+                        <div class="video-card-overlay"><i class="bi bi-play-circle-fill"></i></div>
+                        <div class="video-card-label">Sketch amuzant</div>
+                    </div>
+                    <div class="video-card" onclick="openLightbox(this)">
+                        <video src="Panoramic360/sketch%20cuvinte%20magice.mp4" muted loop playsinline preload="metadata"></video>
+                        <div class="video-card-overlay"><i class="bi bi-play-circle-fill"></i></div>
+                        <div class="video-card-label">Sketch — Cuvinte magice</div>
+                    </div>
+                    <div class="video-card" onclick="openLightbox(this)">
+                        <video src="Panoramic360/VJ%203.mp4" muted loop playsinline preload="metadata"></video>
+                        <div class="video-card-overlay"><i class="bi bi-play-circle-fill"></i></div>
+                        <div class="video-card-label">Prezentare locație</div>
+                    </div>
+                    <div class="video-card" onclick="openLightbox(this)">
+                        <video src="Panoramic360/yes1reel%20(1).mp4" muted loop playsinline preload="metadata"></video>
+                        <div class="video-card-overlay"><i class="bi bi-play-circle-fill"></i></div>
+                        <div class="video-card-label">Reel</div>
+                    </div>
+                    <div class="video-card" onclick="openLightbox(this)">
+                        <video src="Panoramic360/75cbc79b67de4a86aac8769e390d3f85.mp4" muted loop playsinline preload="metadata"></video>
+                        <div class="video-card-overlay"><i class="bi bi-play-circle-fill"></i></div>
+                        <div class="video-card-label">Promo après-ski</div>
+                    </div>
+                    <div class="video-card" onclick="openLightbox(this)">
+                        <video src="Panoramic360/6cd2ab9a6246417a90df221266c8907f.mp4" muted loop playsinline preload="metadata"></video>
+                        <div class="video-card-overlay"><i class="bi bi-play-circle-fill"></i></div>
+                        <div class="video-card-label">Promo munte</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-divider"></div>
+
+            <!-- ╌╌╌╌╌ EXCHANGE LIFE ╌╌╌╌╌ -->
+            <div class="project-block reveal">
+                <div class="project-header reverse">
+                    <div class="project-info">
+                        <span class="project-tag">Jewelry · E-commerce · UGC</span>
+                        <h3>Exchange Life</h3>
+                        <p>Brand de bijuterii pentru pasionații de călătorii. Am creat videoclipuri de prezentare tip UGC — autentice, aspiraționale, construite să genereze încredere și dorință de cumpărare.</p>
+                        <div class="project-services">
+                            <span>📱 UGC</span>
+                            <span>💍 Prezentare produs</span>
+                            <span>✈️ Lifestyle</span>
+                        </div>
+                    </div>
+                    <div class="project-hero-video">
+                        <video src="Exchange%20life/faf5de93-9369-4a0e-968e-6cc3130d6890.mp4" muted loop playsinline preload="metadata"></video>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-divider"></div>
+
+            <!-- ╌╌╌╌╌ BACADEMIA ╌╌╌╌╌ -->
+            <div class="project-block reveal">
+                <div class="project-header">
+                    <div class="project-info">
+                        <span class="project-tag">Education · Publishing · Entertainment</span>
+                        <h3>Bacademia</h3>
+                        <p>Editură de cărți pentru BAC. Am promovat culegerile de bacalaureat prin sketch-uri amuzante care au prins la publicul tânăr, interviuri cu personalități relevante și formate creative de tip știri și extrageri live.</p>
+                        <div class="project-services">
+                            <span>😂 Sketch-uri</span>
+                            <span>🎤 Interviuri</span>
+                            <span>📰 Format știri</span>
+                            <span>🎯 Content viral</span>
+                        </div>
+                    </div>
+                    <div class="project-hero-video">
+                        <video src="Bacademia/kendama(2)%20final.mp4" muted loop playsinline preload="metadata"></video>
+                    </div>
+                </div>
+                <div class="video-grid reveal-stagger">
+                    <div class="video-card" onclick="openLightbox(this)">
+                        <video src="Bacademia/kendama(2)%20final.mp4" muted loop playsinline preload="metadata"></video>
+                        <div class="video-card-overlay"><i class="bi bi-play-circle-fill"></i></div>
+                        <div class="video-card-label">Sketch — Kendama</div>
+                    </div>
+                    <div class="video-card" onclick="openLightbox(this)">
+                        <video src="Bacademia/interviu%204%20-%20v2%20.mp4" muted loop playsinline preload="metadata"></video>
+                        <div class="video-card-overlay"><i class="bi bi-play-circle-fill"></i></div>
+                        <div class="video-card-label">Interviu</div>
+                    </div>
+                    <div class="video-card" onclick="openLightbox(this)">
+                        <video src="Bacademia/%C8%99tire%20bacademia-_2.mp4" muted loop playsinline preload="metadata"></video>
+                        <div class="video-card-overlay"><i class="bi bi-play-circle-fill"></i></div>
+                        <div class="video-card-label">Format știre</div>
+                    </div>
+                    <div class="video-card" onclick="openLightbox(this)">
+                        <video src="Bacademia/Extragere%20.mp4" muted loop playsinline preload="metadata"></video>
+                        <div class="video-card-overlay"><i class="bi bi-play-circle-fill"></i></div>
+                        <div class="video-card-label">Extragere live</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-divider"></div>
+
+            <!-- ╌╌╌╌╌ ZOOMOUT CREW ╌╌╌╌╌ -->
+            <div class="project-block reveal">
+                <div class="project-header reverse">
+                    <div class="project-info">
+                        <span class="project-tag">Drone · Videography · Prezentare</span>
+                        <h3>Zoomout Crew</h3>
+                        <p>Firmă specializată în filmări cu dronă. Am realizat videoclipuri de prezentare generală care pun în valoare calitatea filmărilor aeriene și perspectivele unice pe care le oferă serviciile lor.</p>
+                        <div class="project-services">
+                            <span>🚁 Filmări dronă</span>
+                            <span>🎥 Prezentare servicii</span>
+                            <span>🏔️ Aerial</span>
+                        </div>
+                    </div>
+                    <div class="project-hero-video">
+                        <video src="Zoomout%20crew/4f4aff5be45c40f39e82903742b9690e.mp4" muted loop playsinline preload="metadata"></video>
+                    </div>
+                </div>
+                <div class="video-grid reveal-stagger">
+                    <div class="video-card" onclick="openLightbox(this)">
+                        <video src="Zoomout%20crew/4f4aff5be45c40f39e82903742b9690e.mp4" muted loop playsinline preload="metadata"></video>
+                        <div class="video-card-overlay"><i class="bi bi-play-circle-fill"></i></div>
+                        <div class="video-card-label">Aerial showreel</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Video Lightbox -->
+    <div class="video-lightbox" id="videoLightbox" onclick="closeLightbox(event)">
+        <button class="video-lightbox-close" onclick="closeLightbox(event)"><i class="bi bi-x-lg"></i></button>
+        <video id="lightboxVideo" controls playsinline></video>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         5. DE CE FUNCȚIONEAZĂ
+         ═══════════════════════════════════════════ -->
+    <section class="why" id="de-ce">
+        <div class="container">
+            <div class="text-center reveal">
+                <span class="section-label">De ce funcționează</span>
+                <h2 class="section-title">Nu ghicim. Știm cum<br>funcționează atenția online.</h2>
+            </div>
+
+            <div class="why-grid">
+                <div class="why-list reveal-stagger">
+                    <div class="why-item">
+                        <div class="why-number">01</div>
+                        <div>
+                            <h4>Hook în primele 3 secunde</h4>
+                            <p>Dacă nu captezi atenția imediat, ai pierdut-o. Fiecare video începe cu un hook testat și optimizat.</p>
+                        </div>
+                    </div>
+                    <div class="why-item">
+                        <div class="why-number">02</div>
+                        <div>
+                            <h4>Psihologie de marketing aplicată</h4>
+                            <p>Folosim principii de persuasiune, pattern interrupt și storytelling structurat — nu doar „filmăm frumos".</p>
+                        </div>
+                    </div>
+                    <div class="why-item">
+                        <div class="why-number">03</div>
+                        <div>
+                            <h4>Content care oprește scroll-ul</h4>
+                            <p>Într-o lume cu milioane de postări, conținutul nostru se remarcă prin autenticitate și impact vizual.</p>
+                        </div>
+                    </div>
+                    <div class="why-item">
+                        <div class="why-number">04</div>
+                        <div>
+                            <h4>Focus pe rezultate, nu pe views</h4>
+                            <p>Nu urmărim vanity metrics. Urmărim impactul real: cereri, vânzări, rezervări, lead-uri.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal">
+                    <div class="why-stat-box">
+                        <div class="big-number">3s</div>
+                        <p>Atât ai la dispoziție să captezi atenția.<br>Noi ne asigurăm că o faci.</p>
+                        <div class="stat-row">
+                            <div class="stat-item">
+                                <strong>4</strong>
+                                <span>Branduri construite</span>
+                            </div>
+                            <div class="stat-item">
+                                <strong>50+</strong>
+                                <span>Videouri produse</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         6. CTA FINAL
+         ═══════════════════════════════════════════ -->
+    <section class="cta-section" id="contact">
+        <div class="container">
+            <div class="cta-content reveal">
+                <span class="section-label" style="color:var(--yellow)">Hai să vorbim</span>
+                <h2>Gata să faci <span class="accent">scroll-stop</span><br>content?</h2>
+                <p>Programează un call de 15 minute. Fără obligații, fără pitch agresiv — doar o conversație despre cum poate crește business-ul tău prin video.</p>
+                <div class="cta-buttons">
+                    <a href="https://calendly.com/vibemakers" class="btn-primary">
+                        <i class="bi bi-calendar-check"></i> Programează un call
+                    </a>
+                    <a href="mailto:hello@vibemakers.ro" class="btn-outline">
+                        <i class="bi bi-envelope"></i> hello@vibemakers.ro
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         FOOTER
+         ═══════════════════════════════════════════ -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-logo">VIBE<span>MAKERS</span></div>
+                <div class="footer-links">
+                    <a href="https://instagram.com/vibemakers.ro" target="_blank"><i class="bi bi-instagram"></i> Instagram</a>
+                    <a href="https://tiktok.com/@vibemakers.ro" target="_blank"><i class="bi bi-tiktok"></i> TikTok</a>
+                    <a href="mailto:hello@vibemakers.ro"><i class="bi bi-envelope"></i> Email</a>
+                </div>
+            </div>
+            <div class="footer-copy">
+                <p>© 2026 VibeMakers. Cluj-Napoca. Toate drepturile rezervate.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ═══════════════════════════════════════════
+         SCRIPTS
+         ═══════════════════════════════════════════ -->
+    <script>
+        // ── Navbar scroll effect ──
+        const nav = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 60);
+        });
+
+        // ── Mobile menu ──
+        const toggle = document.getElementById('navToggle');
+        const links = document.getElementById('navLinks');
+        toggle.addEventListener('click', () => links.classList.toggle('open'));
+        links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+
+        // ── Scroll reveal ──
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => observer.observe(el));
+
+        // ── Smooth scroll for anchor links ──
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = document.querySelector(a.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // ── Video hover play ──
+        document.querySelectorAll('.video-card, .project-hero-video').forEach(card => {
+            const vid = card.querySelector('video');
+            if (!vid) return;
+            card.addEventListener('mouseenter', () => { vid.play().catch(()=>{}); });
+            card.addEventListener('mouseleave', () => { vid.pause(); vid.currentTime = 0; });
+        });
+
+        // ── Video lightbox ──
+        const lightbox = document.getElementById('videoLightbox');
+        const lightboxVideo = document.getElementById('lightboxVideo');
+
+        function openLightbox(card) {
+            const src = card.querySelector('video')?.src;
+            if (!src) return;
+            lightboxVideo.src = src;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            lightboxVideo.play().catch(()=>{});
+        }
+
+        function closeLightbox(e) {
+            if (e.target === lightboxVideo) return; // don't close if clicking the video
+            lightboxVideo.pause();
+            lightboxVideo.src = '';
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                closeLightbox(e);
+            }
+        });
+    </script>
+
+</body>
+</html>
